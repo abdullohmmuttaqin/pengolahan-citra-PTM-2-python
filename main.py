@@ -7,46 +7,52 @@ image = cv2.imread('hdpjkw.png')
 if image is None:
     print("Error: File 'hdpjkw.png' tidak ditemukan di folder!")
 else:
-    # Proses pengolahan citra
-    # Konversi ke RGB 
+    # Konversi warna BGR ke RGB
     image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
-    # Konversi ke Grayscale 
+    # Konversi ke Grayscale
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-    # Efek Blur
+    # Gaussian Blur
     blur = cv2.GaussianBlur(image_rgb, (15, 15), 0)
 
-    # Edge detection 
-    edges = cv2.Canny(image, 100, 200)
+    # Edge Detection
+    edges = cv2.Canny(gray, 100, 200)
 
-    # Menampilkan hasil dengan subplot
-    plt.figure(figsize=(12, 8))
+    # Membuat figure dan subplot
+    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 
-    # Gambar asli
-    plt.subplot(2, 2, 1)
-    plt.imshow(image_rgb)
-    plt.title('Gambar Asli')
-    plt.axis('off')
+    # Judul utama
+    fig.suptitle("Hasil Pengolahan Citra", fontsize=22, fontweight='bold')
 
-    # Gambar Grayscale
-    plt.subplot(2, 2, 2)
-    plt.imshow(gray, cmap='gray')
-    plt.title('Grayscale')
-    plt.axis('off')
+    # Gambar Asli
+    axes[0, 0].imshow(image_rgb)
+    axes[0, 0].set_title("Gambar Asli", fontsize=14, pad=10)
+    axes[0, 0].axis("off")
 
-    # Gambar Blur
-    plt.subplot(2, 2, 3)
-    plt.imshow(blur)
-    plt.title('Gaussian Blur')
-    plt.axis('off')
+    # Grayscale
+    axes[0, 1].imshow(gray, cmap='gray')
+    axes[0, 1].set_title("Grayscale", fontsize=14, pad=10)
+    axes[0, 1].axis("off")
+
+    # Gaussian Blur
+    axes[1, 0].imshow(blur)
+    axes[1, 0].set_title("Gaussian Blur", fontsize=14, pad=10)
+    axes[1, 0].axis("off")
 
     # Edge Detection
-    plt.subplot(2, 2, 4)
-    plt.imshow(edges, cmap='gray')
-    plt.title('Edge Detection')
-    plt.axis('off')
+    axes[1, 1].imshow(edges, cmap='gray')
+    axes[1, 1].set_title("Edge Detection", fontsize=14, pad=10)
+    axes[1, 1].axis("off")
 
-    # Merapikan tata letak
-    plt.tight_layout()
+    # Mengatur jarak antar elemen
+    plt.subplots_adjust(
+        top=0.88,
+        bottom=0.06,
+        left=0.05,
+        right=0.95,
+        hspace=0.28,
+        wspace=0.18
+    )
+
     plt.show()
